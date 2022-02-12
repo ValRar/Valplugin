@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.nio.charset.Charset;
 import java.util.Objects;
-
+// aboba
 public class Main extends JavaPlugin {
     public static String charset;
     public static boolean BroadcastJoinMessage;
