@@ -18,13 +18,14 @@ public class Main extends JavaPlugin {
         getCommand("note").setExecutor(new note());
         getCommand("shownote").setExecutor(new shownote());
         getCommand("delnote").setExecutor(new delnote());
-        Objects.requireNonNull(getCommand("reload")).setExecutor(new reload());
 
         loadConfiguration();
+        Killcords listener = new Killcords();
         if (config.getBoolean("ShowKillCords")) {
-            getServer().getPluginManager().registerEvents(new Killcords(),this);
+            getServer().getPluginManager().registerEvents(listener,this);
         }
         BroadcastJoinMessage = config.getBoolean("BroadcastJoinMessage");
+        getCommand("reload_KillCords").setExecutor(new reload_KillCords(this, listener));
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
         getLogger().info("Plugin started!");
     }
@@ -32,7 +33,7 @@ public class Main extends JavaPlugin {
      private void loadConfiguration() {
         config.addDefault("ShowKillCords", true);
         config.addDefault("Charset", "windows-1251");
-        config.addDefault("BroadcastJoinMessage", "true");
+        config.addDefault("BroadcastJoinMessage", true);
         config.options().copyDefaults(true);
         this.saveConfig();
     }
@@ -47,6 +48,9 @@ public class Main extends JavaPlugin {
             return "windows-1251";
         }
         return charsetName.toString();
+    }
+    public void registerEvent() {
+        this.getServer().getPluginManager().registerEvents(new Killcords(), this);
     }
 
 }
