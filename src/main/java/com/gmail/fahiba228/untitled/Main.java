@@ -4,6 +4,8 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.nio.charset.Charset;
+import java.util.Objects;
+
 public class Main extends JavaPlugin {
     public static String charset;
     public static boolean BroadcastJoinMessage;
@@ -16,7 +18,7 @@ public class Main extends JavaPlugin {
         getCommand("note").setExecutor(new note());
         getCommand("shownote").setExecutor(new shownote());
         getCommand("delnote").setExecutor(new delnote());
-        getCommand("test").setExecutor(new reload());
+        Objects.requireNonNull(getCommand("reload")).setExecutor(new reload());
 
         loadConfiguration();
         if (config.getBoolean("ShowKillCords")) {
