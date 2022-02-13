@@ -25,14 +25,21 @@ commands:
     description: "Удаляет определенную заметку"
     permission: valplugin.notes
     usage: '/<command> [number]'
+  reload:
+    description: "reloading plugin"
+    permission: valplugin.reload
+    usage: "/reload"
 
 permissions: #права
   valplugin.cords:
     description: ''
-    default: op
+    default: 'op'
   valplugin.warning:
     description: ''
-    default: op
+    default: 'op'
   valplugin.notes:
-    description: 'notes acces'
+    description: 'notes access'
     default: 'true'
+  valplugin.reload:
+    description: "reload access"
+    default: 'op'
