@@ -25,14 +25,21 @@ commands:
     description: "Удаляет определенную заметку"
     permission: valplugin.notes
     usage: '/<command> [number]'
+  killcords_switch:
+    description: "reloading plugin"
+    permission: valplugin.switch
+    usage: "/reload"
 
 permissions: #права
   valplugin.cords:
     description: ''
-    default: op
+    default: 'op'
   valplugin.warning:
     description: ''
-    default: op
+    default: 'op'
   valplugin.notes:
-    description: 'notes acces'
+    description: 'notes access'
     default: 'true'
+  valplugin.switch:
+    description: "switch variables acces"
+    default: 'op'

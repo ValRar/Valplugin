@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.nio.charset.Charset;
 import java.util.Objects;
-// aboba
+
 public class Main extends JavaPlugin {
     public static String charset;
     public static boolean BroadcastJoinMessage;
@@ -20,10 +20,13 @@ public class Main extends JavaPlugin {
         getCommand("delnote").setExecutor(new delnote());
 
         loadConfiguration();
+        Killcords listener = new Killcords();
         if (config.getBoolean("ShowKillCords")) {
-            getServer().getPluginManager().registerEvents(new Killcords(),this);
+            getServer().getPluginManager().registerEvents(listener,this);
         }
         BroadcastJoinMessage = config.getBoolean("BroadcastJoinMessage");
+        getCommand("killcords_switch").setExecutor(new killcords_switch(this, listener));
+
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
         getLogger().info("Plugin started!");
     }
@@ -31,7 +34,7 @@ public class Main extends JavaPlugin {
      private void loadConfiguration() {
         config.addDefault("ShowKillCords", true);
         config.addDefault("Charset", "windows-1251");
-        config.addDefault("BroadcastJoinMessage", "true");
+        config.addDefault("BroadcastJoinMessage", true);
         config.options().copyDefaults(true);
         this.saveConfig();
     }
@@ -47,4 +50,8 @@ public class Main extends JavaPlugin {
         }
         return charsetName.toString();
     }
+    public void registerEvent() {
+        this.getServer().getPluginManager().registerEvents(new Killcords(), this);
+    }
+
 }

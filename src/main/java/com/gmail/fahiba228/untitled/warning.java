@@ -15,7 +15,7 @@ public class warning implements CommandExecutor {
             for (String str : args)
                 text.append(str).append(" ");
             for (Player player : Bukkit.getOnlinePlayers()) {
-                player.sendTitle(text.toString(), "", 10, 70, 20);
+                player.sendTitle(ChatColor.RED + text.toString(), "", 10, 70, 20);
             }
             sender.sendMessage( ChatColor.GREEN + "Успешно!");
             return true;
