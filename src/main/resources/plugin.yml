@@ -9,6 +9,10 @@ commands:
     description: "Показывает координаты выбранного игрока"
     permission: valplugin.cords #право
     usage: '/cords [player]'
+    register: true
+    tab_completer:
+      1:
+        - $player_list
   warning:
     description: "Показывает обЪявление по центру экрана всем игрокам"
     permission: valplugin.warning
@@ -25,10 +29,15 @@ commands:
     description: "Удаляет определенную заметку"
     permission: valplugin.notes
     usage: '/<command> [number]'
-  killcords_switch:
-    description: "reloading plugin"
+  switch:
+    description: "switch Variables"
     permission: valplugin.switch
-    usage: "/reload"
+    usage: "/switch <Variable>"
+    register: true
+    tab_complete:
+      1:
+        - ShowKillCords
+        - BroadcastJoinMessage
 
 permissions: #права
   valplugin.cords:

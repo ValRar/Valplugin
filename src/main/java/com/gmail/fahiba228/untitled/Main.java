@@ -25,7 +25,7 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvents(listener,this);
         }
         BroadcastJoinMessage = config.getBoolean("BroadcastJoinMessage");
-        getCommand("killcords_switch").setExecutor(new killcords_switch(this, listener));
+        getCommand("switch").setExecutor(new SwitchVar(this, listener));
 
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
         getLogger().info("Plugin started!");
