@@ -8,6 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import java.util.List;
+
 
 public class SwitchVar implements CommandExecutor {
     private final Main plugin;
@@ -39,6 +41,7 @@ public class SwitchVar implements CommandExecutor {
             }
             Bukkit.broadcastMessage(ChatColor.ITALIC + "variable " + strings[0] + " now set to: " + var);
             config.set(strings[0], var);
+            this.plugin.saveConfig();
             return true;
         }
         return false;

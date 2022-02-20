@@ -1,5 +1,6 @@
 package com.gmail.fahiba228.untitled;
 import org.bukkit.ChatColor;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,6 +27,7 @@ public class Main extends JavaPlugin {
         }
         BroadcastJoinMessage = config.getBoolean("BroadcastJoinMessage");
         getCommand("switch").setExecutor(new SwitchVar(this, listener));
+        getCommand("switch").setTabCompleter(new SwitchVarTabComplete());
 
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
         getLogger().info("Plugin started!");
