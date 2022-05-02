@@ -11,19 +11,22 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 
 public class JoinListener implements Listener {
+    private final String notesPath;
     @EventHandler
     void onJoin(PlayerJoinEvent event){
         StringBuilder path = new StringBuilder();
         if (Main.BroadcastJoinMessage) {
             event.setJoinMessage(ChatColor.YELLOW + event.getPlayer().getName() + " Зашел на сервер!");
         }
-        path.append("./plugins/valplugin/").append(event.getPlayer().getName()).append(".txt");
+        path.append(notesPath).append("/notes/").append(event.getPlayer().getUniqueId().toString()).append(".txt");
         try {
-            PrintWriter writer = null;
-            writer = new PrintWriter((new FileWriter(String.valueOf(path), Charset.forName(Main.charset), true)));
+            PrintWriter writer = new PrintWriter((new FileWriter(String.valueOf(path), Charset.forName(Main.charset), true)));
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public JoinListener(String notesPath) {
+        this.notesPath = notesPath;
     }
 }

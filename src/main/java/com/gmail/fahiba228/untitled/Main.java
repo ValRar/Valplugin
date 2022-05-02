@@ -1,24 +1,32 @@
 package com.gmail.fahiba228.untitled;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.nio.charset.Charset;
-import java.util.Objects;
 
 public class Main extends JavaPlugin {
     public static String charset;
     public static boolean BroadcastJoinMessage;
-    public Configuration config = this.getConfig();
+    private final Configuration config = this.getConfig();
     @Override
     public void onEnable() {
         charset = getCharset();
+
+        File notesDir = new File(Bukkit.getWorlds().get(0).getName() + "/notes");
+        if (!notesDir.exists()){
+            notesDir.mkdir();
+        }
+
+
         getCommand("cords").setExecutor(new cords());
-        getCommand("warning").setExecutor(new warning());
-        getCommand("note").setExecutor(new note());
-        getCommand("shownote").setExecutor(new shownote());
-        getCommand("delnote").setExecutor(new delnote());
+        getCommand("warning").setExecutor(new Warning());
+        getCommand("note").setExecutor(new Note(Bukkit.getWorlds().get(0).getName()));
+        getCommand("shownote").setExecutor(new ShowNote(Bukkit.getWorlds().get(0).getName()));
+        getCommand("delnote").setExecutor(new DelNote(Bukkit.getWorlds().get(0).getName()));
 
         loadConfiguration();
         Killcords listener = new Killcords();
@@ -26,10 +34,12 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvents(listener,this);
         }
         BroadcastJoinMessage = config.getBoolean("BroadcastJoinMessage");
+      
         getCommand("switch").setExecutor(new SwitchVar(this, listener));
         getCommand("switch").setTabCompleter(new SwitchVarTabComplete());
 
-        getServer().getPluginManager().registerEvents(new JoinListener(), this);
+
+        getServer().getPluginManager().registerEvents(new JoinListener(Bukkit.getWorlds().get(0).getName()), this);
         getLogger().info("Plugin started!");
     }
 
@@ -46,14 +56,11 @@ public class Main extends JavaPlugin {
             charsetName = Charset.forName(config.getString("Charset"));
         } catch (IllegalArgumentException e) {
             getLogger().info(ChatColor.RED + "Invalid Charset name! Change it in the config file!");
-            config.set("Charset", "windows-1251");
-            getLogger().info("Using default charset - windows-1251");
+            config.set("Charset", "UTF8");
+            getLogger().info("Using default charset - UTF-8");
             return "windows-1251";
         }
         return charsetName.toString();
-    }
-    public void registerEvent() {
-        this.getServer().getPluginManager().registerEvents(new Killcords(), this);
     }
 
 }
