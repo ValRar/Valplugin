@@ -12,15 +12,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class delnote implements CommandExecutor {
+public class DelNote implements CommandExecutor {
+    private final String notesPath;
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         String deletedLine;
         if (args.length == 1){
             StringBuilder path = new StringBuilder();
             StringBuilder pathcache = new StringBuilder();
-            path.append("./plugins/valplugin/").append(commandSender.getName()).append(".txt");
-            pathcache.append("./plugins/valplugin/").append(commandSender.getName()).append("cache.txt");
+            path.append(notesPath).append("/notes/").append(commandSender.getServer().getPlayer(commandSender.getName()).getUniqueId().toString()).append(".txt");
+            pathcache.append(notesPath).append("/notes/").append(commandSender.getServer().getPlayer(commandSender.getName()).getUniqueId().toString()).append(".tmp.txt");
             List<String> lines = new ArrayList();
             File sourceFile = new File(path.toString());
             File outputFile = new File(pathcache.toString());
@@ -57,5 +58,8 @@ public class delnote implements CommandExecutor {
         }
         commandSender.sendMessage(ChatColor.RED + "Введите номер заметки!");
         return false;
+    }
+    public DelNote(String notesPath) {
+        this.notesPath = notesPath;
     }
 }
