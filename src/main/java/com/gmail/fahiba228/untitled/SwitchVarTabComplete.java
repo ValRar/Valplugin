@@ -12,7 +12,7 @@ public class SwitchVarTabComplete implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args){
         if (args.length == 1) {
             List<String> completer = new ArrayList<String>();
-            completer.add("ShowKillCOrds");
+            completer.add("ShowKillCords");
             completer.add("BroadcastJoinMessage");
             return completer;
         }

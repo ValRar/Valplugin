@@ -7,38 +7,38 @@ api-version: 1.18
 commands:
   cords:
     description: "Показывает координаты выбранного игрока"
-    permission: valplugin.cords #право
+    permission: valPlugin.cords #право
     usage: '/cords [player]'
   warning:
     description: "Показывает обЪявление по центру экрана всем игрокам"
-    permission: valplugin.warning
+    permission: valPlugin.warning
     usage: '/warning [message]'
   note:
     description: "Создает запись"
-    permission: valplugin.notes
+    permission: valPlugin.notes
     usage: '/note [text]'
   shownote:
     description: "Показывает записи"
-    permission: valplugin.notes
+    permission: valPlugin.notes
     usage: '/<command>'
   delnote:
     description: "Удаляет определенную заметку"
-    permission: valplugin.notes
+    permission: valPlugin.notes
     usage: '/<command> [number]'
   switch:
     description: "switch Variables"
-    permission: valplugin.switch
+    permission: valPlugin.switch
     usage: "/switch <Variable>"
 permissions: #права
-  valplugin.cords:
+  valPlugin.cords:
     description: ''
     default: 'op'
-  valplugin.warning:
+  valPlugin.warning:
     description: ''
     default: 'op'
-  valplugin.notes:
+  valPlugin.notes:
     description: 'notes access'
     default: 'true'
-  valplugin.switch:
-    description: "switch variables acces"
+  valPlugin.switch:
+    description: "switch variables access"
     default: 'op'

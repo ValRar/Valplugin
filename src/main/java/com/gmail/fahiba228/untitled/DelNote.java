@@ -19,15 +19,15 @@ public class DelNote implements CommandExecutor {
         String deletedLine;
         if (args.length == 1){
             StringBuilder path = new StringBuilder();
-            StringBuilder pathcache = new StringBuilder();
+            StringBuilder pathCache = new StringBuilder();
             path.append(notesPath).append("/notes/").append(commandSender.getServer().getPlayer(commandSender.getName()).getUniqueId().toString()).append(".txt");
-            pathcache.append(notesPath).append("/notes/").append(commandSender.getServer().getPlayer(commandSender.getName()).getUniqueId().toString()).append(".tmp.txt");
+            pathCache.append(notesPath).append("/notes/").append(commandSender.getServer().getPlayer(commandSender.getName()).getUniqueId().toString()).append(".tmp.txt");
             List<String> lines = new ArrayList();
             File sourceFile = new File(path.toString());
-            File outputFile = new File(pathcache.toString());
+            File outputFile = new File(pathCache.toString());
             try {
                 BufferedReader reader = Files.newBufferedReader(Paths.get(path.toString()), Charset.forName(Main.charset));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(pathcache.toString()));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(pathCache.toString()));
                 lines.add(reader.readLine());
                 for (int i = 0;lines.get(i) != null;i++) {
                     lines.add(reader.readLine());
