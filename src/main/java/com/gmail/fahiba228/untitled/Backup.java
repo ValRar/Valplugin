@@ -8,25 +8,30 @@ import org.bukkit.command.CommandSender;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Backup implements CommandExecutor {
     private final Main plugin;
+    private final File backupDir;
 
-    public Backup(Main plugin) {
+    public Backup(Main plugin, File backupDir) {
         this.plugin = plugin;
+        this.backupDir = backupDir;
     }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        String worldName = Bukkit.getWorlds().get(0).getName();
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd'_'HH-mm");
+        Date date = new Date(System.currentTimeMillis());
+        String zipName = worldName + "_" + formatter.format(date) + ".zip";
+        Bukkit.broadcastMessage(zipName);
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @SuppressWarnings("")
             @Override
             public void run() {
-                String worldName = Bukkit.getWorlds().get(0).getName();
-                File backupDir = new File("/worldBackups");
-                if (!backupDir.exists()) backupDir.mkdir();
                 try {
-                    Zipper zipper = new Zipper("/worldBackups/latest.zip");
+                    Zipper zipper = new Zipper("./worldBackups/" + zipName);
                     zipper.addDirectory(new File(worldName));
                     zipper.addDirectory(new File(worldName + "_nether"));
                     zipper.addDirectory(new File(worldName + "_the_end"));

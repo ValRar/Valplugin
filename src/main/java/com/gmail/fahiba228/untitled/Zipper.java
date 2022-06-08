@@ -1,17 +1,22 @@
 package com.gmail.fahiba228.untitled;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zipper {
 
+    private final String zipName;
     private final ZipOutputStream zout;
-    Zipper(String zip_file) throws IOException
+    Zipper(String zip_fileName) throws IOException
     {
+        zipName = zip_fileName;
+        File zipFile = new File(zip_fileName);
         // Cоздание объекта ZipOutputStream из FileOutputStream
-        FileOutputStream fout = new FileOutputStream(zip_file);
-        zout = new ZipOutputStream(fout);
+        zout = new ZipOutputStream(new FileOutputStream(zipFile));
     }
     public void addDirectory(File fileSource)
             throws IOException
@@ -26,18 +31,10 @@ public class Zipper {
                 continue;
             }
             //System.out.println("Добавление файла <" + file.getName() + ">");
-
-            FileInputStream fis = new FileInputStream(file);
-
             zout.putNextEntry(new ZipEntry(file.getPath()));
-
-            byte[] buffer = new byte[4048];
-            int length;
-            while ((length = fis.read(buffer)) > 0)
-                zout.write(buffer, 0, length);
-            // Закрываем ZipOutputStream и InputStream
+            if (!file.getName().equals("session.lock")) Files.copy(file.toPath(), zout);
             zout.closeEntry();
-            fis.close();
+
         }
     }
     public void close() throws IOException {

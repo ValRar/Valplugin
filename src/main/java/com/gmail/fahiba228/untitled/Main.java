@@ -5,7 +5,10 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Main extends JavaPlugin {
 
@@ -21,6 +24,10 @@ public class Main extends JavaPlugin {
         if (!notesDir.exists()) {
             notesDir.mkdir();
         }
+        File backupDir = new File("./worldBackups/");
+        if (!backupDir.exists()) {
+            backupDir.mkdirs();
+        }
 
 
         getCommand("cords").setExecutor(new Cords());
@@ -28,7 +35,7 @@ public class Main extends JavaPlugin {
         getCommand("note").setExecutor(new Note(Bukkit.getWorlds().get(0).getName()));
         getCommand("shownote").setExecutor(new ShowNote(Bukkit.getWorlds().get(0).getName()));
         getCommand("delnote").setExecutor(new DelNote(Bukkit.getWorlds().get(0).getName()));
-        getCommand("backup").setExecutor(new Backup(this));
+        getCommand("backup").setExecutor(new Backup(this, backupDir));
 
         loadConfiguration();
         Killcords listener = new Killcords();
@@ -65,7 +72,4 @@ public class Main extends JavaPlugin {
         return charsetName.toString();
     }
 
-    public static Main getInstance(){
-        return main;
-    }
 }
