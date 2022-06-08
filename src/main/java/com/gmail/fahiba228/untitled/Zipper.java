@@ -1,19 +1,19 @@
 package com.gmail.fahiba228.untitled;
 
+import org.bukkit.plugin.PluginLogger;
+
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zipper {
 
-    private final String zipName;
+    private final Logger logger = Main.getMain().getLogger();
     private final ZipOutputStream zout;
     Zipper(String zip_fileName) throws IOException
     {
-        zipName = zip_fileName;
         File zipFile = new File(zip_fileName);
         // Cоздание объекта ZipOutputStream из FileOutputStream
         zout = new ZipOutputStream(new FileOutputStream(zipFile));
@@ -27,12 +27,16 @@ public class Zipper {
             // Если file является директорией, то рекурсивно вызываем
             // метод addDirectory
             if (file.isDirectory()) {
+                logger.info("Adding directory <" + file.getName() + ">");
                 addDirectory(file);
                 continue;
             }
             //System.out.println("Добавление файла <" + file.getName() + ">");
             zout.putNextEntry(new ZipEntry(file.getPath()));
-            if (!file.getName().equals("session.lock")) Files.copy(file.toPath(), zout);
+            if (!file.getName().equals("session.lock")) {
+                logger.info("adding file <" + file.getName() + ">");
+                Files.copy(file.toPath(), zout);
+            }
             zout.closeEntry();
 
         }

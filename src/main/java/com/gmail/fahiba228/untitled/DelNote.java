@@ -20,8 +20,8 @@ public class DelNote implements CommandExecutor {
         if (args.length == 1){
             StringBuilder path = new StringBuilder();
             StringBuilder pathCache = new StringBuilder();
-            path.append(notesPath).append("/notes/").append(commandSender.getServer().getPlayer(commandSender.getName()).getUniqueId().toString()).append(".txt");
-            pathCache.append(notesPath).append("/notes/").append(commandSender.getServer().getPlayer(commandSender.getName()).getUniqueId().toString()).append(".tmp.txt");
+            path.append(notesPath).append("/notes/").append(commandSender.getServer().getPlayer(commandSender.getName()).getUniqueId()).append(".txt");
+            pathCache.append(notesPath).append("/notes/").append(commandSender.getServer().getPlayer(commandSender.getName()).getUniqueId()).append(".tmp.txt");
             List<String> lines = new ArrayList();
             File sourceFile = new File(path.toString());
             File outputFile = new File(pathCache.toString());

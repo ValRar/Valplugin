@@ -72,4 +72,7 @@ public class Main extends JavaPlugin {
         return charsetName.toString();
     }
 
+    public static Main getMain() {
+        return main;
+    }
 }
