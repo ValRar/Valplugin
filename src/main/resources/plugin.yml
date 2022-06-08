@@ -29,6 +29,10 @@ commands:
     description: "switch Variables"
     permission: valPlugin.switch
     usage: "/switch <Variable>"
+  backup:
+    description: ""
+    permission: valPlugin.backup
+    usage: "/backup"
 permissions: #права
   valPlugin.cords:
     description: ''
@@ -42,3 +46,6 @@ permissions: #права
   valPlugin.switch:
     description: "switch variables access"
     default: 'op'
+  valPlugin.backup:
+    description: ""
+    default: "op"

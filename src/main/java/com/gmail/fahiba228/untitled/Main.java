@@ -5,11 +5,11 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.BufferUnderflowException;
 import java.nio.charset.Charset;
 
 public class Main extends JavaPlugin {
+
+    public static Main main;
     public static String charset;
     public static boolean BroadcastJoinMessage;
     private final Configuration config = this.getConfig();
@@ -28,6 +28,7 @@ public class Main extends JavaPlugin {
         getCommand("note").setExecutor(new Note(Bukkit.getWorlds().get(0).getName()));
         getCommand("shownote").setExecutor(new ShowNote(Bukkit.getWorlds().get(0).getName()));
         getCommand("delnote").setExecutor(new DelNote(Bukkit.getWorlds().get(0).getName()));
+        getCommand("backup").setExecutor(new Backup(this));
 
         loadConfiguration();
         Killcords listener = new Killcords();
@@ -64,21 +65,7 @@ public class Main extends JavaPlugin {
         return charsetName.toString();
     }
 
-    @Override
-    public void onDisable() {
-        String worldName = Bukkit.getWorlds().get(0).getName();
-        File backupDir = new File("/worldBackups");
-        if (!backupDir.exists()) backupDir.mkdir();
-        try {
-            Zipper zipper = new Zipper("/worldBackups/latest.zip");
-            zipper.addDirectory(new File(worldName));
-            zipper.addDirectory(new File(worldName + "_nether"));
-            zipper.addDirectory(new File(worldName + "_the_end"));
-            zipper.close();
-            Bukkit.broadcastMessage(ChatColor.GREEN + "Backup of the world was created successfully.");
-        } catch (IOException e) {
-            Bukkit.broadcastMessage(ChatColor.RED + "Failed to create a backup of the world!");
-        }
-        super.onDisable();
+    public static Main getInstance(){
+        return main;
     }
 }
