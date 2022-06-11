@@ -10,13 +10,14 @@ import java.util.zip.ZipOutputStream;
 
 public class Zipper {
 
-    private final Logger logger = Main.getMain().getLogger();
+    private final Logger logger;
     private final ZipOutputStream zout;
-    Zipper(String zip_fileName) throws IOException
+    Zipper(String zip_fileName, Logger logger) throws IOException
     {
         File zipFile = new File(zip_fileName);
         // Cоздание объекта ZipOutputStream из FileOutputStream
         zout = new ZipOutputStream(new FileOutputStream(zipFile));
+        this.logger = logger;
     }
     public void addDirectory(File fileSource)
             throws IOException

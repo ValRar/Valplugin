@@ -11,8 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Main extends JavaPlugin {
-
-    public static Main main;
     public static String charset;
     public static boolean BroadcastJoinMessage;
     private final Configuration config = this.getConfig();
@@ -56,6 +54,7 @@ public class Main extends JavaPlugin {
         config.addDefault("ShowKillCords", true);
         config.addDefault("Charset", "UTF8");
         config.addDefault("BroadcastJoinMessage", true);
+        config.addDefault("BackupOnShutDown", true);
         config.options().copyDefaults(true);
         this.saveConfig();
     }
@@ -72,7 +71,24 @@ public class Main extends JavaPlugin {
         return charsetName.toString();
     }
 
-    public static Main getMain() {
-        return main;
+    @Override
+    public void onDisable() {
+        if (config.getBoolean("BackupOnShutDown")) {
+            String worldName = Bukkit.getWorlds().get(0).getName();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'_'HH-mm");
+            Date date = new Date(System.currentTimeMillis());
+            String zipName = worldName + "_" + formatter.format(date) + ".zip";
+            try {
+                Zipper zipper = new Zipper("./worldBackups/" + zipName, getLogger());
+                zipper.addDirectory(new File(worldName));
+                zipper.addDirectory(new File(worldName + "_nether"));
+                zipper.addDirectory(new File(worldName + "_the_end"));
+                zipper.close();
+                getLogger().info(ChatColor.GREEN + "Backup of the world was created successfully.");
+            } catch (IOException e) {
+                getLogger().info(ChatColor.RED + "Failed to create a backup of the world!");
+                e.printStackTrace();
+            }
+        }
     }
 }
