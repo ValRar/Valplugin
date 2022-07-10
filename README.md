@@ -8,3 +8,8 @@
 > Используемая кодировка
 
 [Список доступных кодировок](https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html)
+
+4. BackupOnShutDown
+> Создание бэкапа при остановке сервера
+5. BackupDirectory
+> Название папки с бэкапами
