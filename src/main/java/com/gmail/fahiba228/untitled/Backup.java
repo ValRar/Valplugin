@@ -34,7 +34,7 @@ public class Backup implements CommandExecutor {
             @Override
             public void run() {
                 try {
-                    Zipper zipper = new Zipper("./worldBackups/" + zipName, logger);
+                    Zipper zipper = new Zipper("./" + backupDir.getName() + "/" + zipName, logger);
                     zipper.addDirectory(new File(worldName));
                     zipper.addDirectory(new File(worldName + "_nether"));
                     zipper.addDirectory(new File(worldName + "_the_end"));

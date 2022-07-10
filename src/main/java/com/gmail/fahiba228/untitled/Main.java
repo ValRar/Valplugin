@@ -22,7 +22,7 @@ public class Main extends JavaPlugin {
         if (!notesDir.exists()) {
             notesDir.mkdir();
         }
-        File backupDir = new File("./worldBackups/");
+        File backupDir = new File("./" + config.getString("BackupDirectory", "worldBackups") + "/");
         if (!backupDir.exists()) {
             backupDir.mkdirs();
         }
@@ -55,6 +55,7 @@ public class Main extends JavaPlugin {
         config.addDefault("Charset", "UTF8");
         config.addDefault("BroadcastJoinMessage", true);
         config.addDefault("BackupOnShutDown", true);
+        config.addDefault("BackupDirectory", "worldBackups");
         config.options().copyDefaults(true);
         this.saveConfig();
     }
