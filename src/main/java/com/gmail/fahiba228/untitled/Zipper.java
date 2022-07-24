@@ -1,7 +1,5 @@
 package com.gmail.fahiba228.untitled;
 
-import org.bukkit.plugin.PluginLogger;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.util.logging.Logger;
