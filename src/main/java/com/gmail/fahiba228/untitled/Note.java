@@ -21,7 +21,7 @@ public class Note implements CommandExecutor {
             text.append(str).append(" ");
         }
         write(String.valueOf(text), path.toString());
-        commandSender.sendMessage(ChatColor.GREEN + "Запись создана успешно: " + text);
+        commandSender.sendMessage(ChatColor.GREEN + Main.localeRes.getString("note_created_success") + text);
         return true;
     }
     private static void write(String str, String path) {

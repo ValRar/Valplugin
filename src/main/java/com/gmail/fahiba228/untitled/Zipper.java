@@ -26,14 +26,14 @@ public class Zipper {
             // Если file является директорией, то рекурсивно вызываем
             // метод addDirectory
             if (file.isDirectory()) {
-                logger.info("Adding directory <" + file.getName() + ">");
+                logger.info( Main.localeRes.getString("adding_dir") +" <" + file.getName() + ">");
                 addDirectory(file);
                 continue;
             }
             //System.out.println("Добавление файла <" + file.getName() + ">");
             zout.putNextEntry(new ZipEntry(file.getPath()));
             if (!file.getName().equals("session.lock")) {
-                logger.info("adding file <" + file.getName() + ">");
+                logger.info(Main.localeRes.getString("adding_file") + " <" + file.getName() + ">");
                 Files.copy(file.toPath(), zout);
             }
             zout.closeEntry();
