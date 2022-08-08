@@ -36,7 +36,11 @@ public class Main extends JavaPlugin {
         } else if (Locale.getDefault().equals(RUS_LOC)){
             localeRes = ResourceBundle.getBundle("locale", RUS_LOC);
             loadConfiguration("ru");
+        } else if (Locale.getDefault().getLanguage().equals(Locale.ENGLISH)) {
+            localeRes = ResourceBundle.getBundle("locale", Locale.ENGLISH);
+            loadConfiguration("en");
         } else {
+            getLogger().info("Unfortunately, your language is not supported. English is set by default.");
             localeRes = ResourceBundle.getBundle("locale", Locale.ENGLISH);
             loadConfiguration("en");
         }
