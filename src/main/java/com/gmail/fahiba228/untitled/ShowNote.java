@@ -26,10 +26,10 @@ public class ShowNote implements CommandExecutor {
                 commandSender.sendMessage(ChatColor.ITALIC + Integer.toString(i) + ". " + line);
             }
             if (i == 0)
-                commandSender.sendMessage(ChatColor.RED + "Ни одной записи не найдено!");
+                commandSender.sendMessage(ChatColor.RED + Main.localeRes.getString("no_notes_message"));
         }
         catch (IOException e) {
-            commandSender.sendMessage( ChatColor.RED + "Произошла неизвестная ошибка!");
+            commandSender.sendMessage( ChatColor.RED + Main.localeRes.getString("unexcepted_error_message"));
         }
         return true;
     }

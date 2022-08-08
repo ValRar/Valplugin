@@ -11,6 +11,6 @@ public class Killcords implements Listener {
     @EventHandler (priority = EventPriority.NORMAL)
     public void onKill (PlayerDeathEvent event){
         Location l = event.getEntity().getLocation();
-        event.getEntity().sendMessage(ChatColor.GOLD + "Вы умерли на координатах: " + l.getBlockX() + " " + l.getBlockY() + " " + l.getBlockZ());
+        event.getEntity().sendMessage(ChatColor.GOLD + Main.localeRes.getString("death_coords_message") + l.getBlockX() + " " + l.getBlockY() + " " + l.getBlockZ());
     }
 }

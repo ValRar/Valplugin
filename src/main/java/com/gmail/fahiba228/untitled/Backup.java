@@ -25,27 +25,27 @@ public class Backup implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        Bukkit.broadcastMessage(ChatColor.BOLD + "Start making backup...");
+        Bukkit.broadcastMessage(ChatColor.BOLD + Main.localeRes.getString("begin_backup"));
         String worldName = Bukkit.getWorlds().get(0).getName();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'_'HH-mm");
         Date date = new Date(System.currentTimeMillis());
         String zipName = worldName + "_" + formatter.format(date) + ".zip";
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Zipper zipper = new Zipper("./" + backupDir.getName() + "/" + zipName, logger);
-                    zipper.addDirectory(new File(worldName));
-                    zipper.addDirectory(new File(worldName + "_nether"));
-                    zipper.addDirectory(new File(worldName + "_the_end"));
-                    zipper.close();
-                    logger.info(ChatColor.GREEN + "Backup of the world was created successfully.");
-                    commandSender.sendMessage(ChatColor.GREEN + "Backup of the world was created successfully.");
-                } catch (IOException e) {
-                    commandSender.sendMessage(ChatColor.RED + "Failed to create a backup of the world!");
-                    logger.info(ChatColor.RED + "Failed to create a backup of the world!");
-                    e.printStackTrace();
-                }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            try {
+                Zipper zipper = new Zipper("./" + backupDir.getName() + "/" + zipName, logger);
+                zipper.addDirectory(new File(worldName));
+                zipper.addDirectory(new File(worldName + "_nether"));
+                zipper.addDirectory(new File(worldName + "_the_end"));
+                zipper.close();
+                logger.info(ChatColor.GREEN + Main.localeRes.getString("success_backup_message"));
+                commandSender.sendMessage(ChatColor.GREEN + Main.localeRes.getString("success_backup_message"));
+            } catch (NullPointerException e){
+                commandSender.sendMessage(ChatColor.RED + Main.localeRes.getString("error_world_folder"));
+                logger.info(ChatColor.RED + Main.localeRes.getString("error_world_folder"));
+            } catch (IOException e) {
+                commandSender.sendMessage(ChatColor.RED + Main.localeRes.getString("error_backup_message"));
+                logger.info(ChatColor.RED + Main.localeRes.getString("error_backup_message"));
+                e.printStackTrace();
             }
         });
         return true;

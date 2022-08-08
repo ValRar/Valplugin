@@ -43,20 +43,20 @@ public class DelNote implements CommandExecutor {
                 writer.close();
                 sourceFile.delete();
                 outputFile.renameTo(sourceFile);
-                commandSender.sendMessage(ChatColor.GREEN + "Запись успешно удалена: " + deletedLine);
+                commandSender.sendMessage(ChatColor.GREEN + Main.localeRes.getString("note_deleted_success") + deletedLine);
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
                 return true;
             } catch (NumberFormatException e){
-                commandSender.sendMessage(ChatColor.RED + "Аргумент должен быть числом!");
+                commandSender.sendMessage(ChatColor.RED + Main.localeRes.getString("arg_need_num_err_mess"));
                 return false;
             } catch (IndexOutOfBoundsException e){
-                commandSender.sendMessage(ChatColor.RED + "Введите действительный номер заметки!");
+                commandSender.sendMessage(ChatColor.RED + Main.localeRes.getString("invalid_note_index"));
                 return false;
             }
         }
-        commandSender.sendMessage(ChatColor.RED + "Введите номер заметки!");
+        commandSender.sendMessage(ChatColor.RED + Main.localeRes.getString("invalid_note_index"));
         return false;
     }
     public DelNote(String notesPath) {

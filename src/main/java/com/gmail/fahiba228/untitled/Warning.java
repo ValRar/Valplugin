@@ -17,10 +17,10 @@ public class Warning implements CommandExecutor {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 player.sendTitle(ChatColor.RED + text.toString(), "", 10, 70, 20);
             }
-            sender.sendMessage( ChatColor.GREEN + "Успешно!");
+            sender.sendMessage( ChatColor.GREEN + Main.localeRes.getString("success"));
             return true;
         }
-        sender.sendMessage(ChatColor.RED + "Некорректный ввод комманды");
+        sender.sendMessage(ChatColor.RED + Main.localeRes.getString("incorr_comm_input"));
         return false;
     }
 }

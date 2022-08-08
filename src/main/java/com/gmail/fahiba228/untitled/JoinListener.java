@@ -15,9 +15,6 @@ public class JoinListener implements Listener {
     @EventHandler
     void onJoin(PlayerJoinEvent event){
         StringBuilder path = new StringBuilder();
-        if (Main.BroadcastJoinMessage) {
-            event.setJoinMessage(ChatColor.YELLOW + event.getPlayer().getName() + " Зашел на сервер!");
-        }
         path.append(notesPath).append("/notes/").append(event.getPlayer().getUniqueId().toString()).append(".txt");
         try {
             PrintWriter writer = new PrintWriter((new FileWriter(String.valueOf(path), Charset.forName(Main.charset), true)));

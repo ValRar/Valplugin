@@ -19,7 +19,7 @@ public class Cords implements CommandExecutor {
                 return true;
             }
         }
-        sender.sendMessage(ChatColor.RED + "Игрок не найден!");
+        sender.sendMessage(ChatColor.RED + Main.localeRes.getString("player_not_found_message"));
         return false;
     }
 }

@@ -8,12 +8,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 public class Main extends JavaPlugin {
     public static String charset;
-    public static boolean BroadcastJoinMessage;
     private final Configuration config = this.getConfig();
+    private final static Locale RUS_LOC = new Locale("ru", "RU");
+    static ResourceBundle localeRes;
     @Override
     public void onEnable() {
         charset = getCharset();
@@ -26,7 +27,19 @@ public class Main extends JavaPlugin {
         if (!backupDir.exists()) {
             backupDir.mkdirs();
         }
-
+        if (config.getString("Language") != null) {
+            if (Objects.equals(config.getString("Language"), "ru")) {
+                localeRes = ResourceBundle.getBundle("locale", RUS_LOC);
+            } else {
+                localeRes = ResourceBundle.getBundle("locale", Locale.ENGLISH);
+            }
+        } else if (Locale.getDefault().equals(RUS_LOC)){
+            localeRes = ResourceBundle.getBundle("locale", RUS_LOC);
+            loadConfiguration("ru");
+        } else {
+            localeRes = ResourceBundle.getBundle("locale", Locale.ENGLISH);
+            loadConfiguration("en");
+        }
 
         getCommand("cords").setExecutor(new Cords());
         getCommand("warning").setExecutor(new Warning());
@@ -35,27 +48,22 @@ public class Main extends JavaPlugin {
         getCommand("delnote").setExecutor(new DelNote(Bukkit.getWorlds().get(0).getName()));
         getCommand("backup").setExecutor(new Backup(this, backupDir));
 
-        loadConfiguration();
         Killcords listener = new Killcords();
         if (config.getBoolean("ShowKillCords")) {
             getServer().getPluginManager().registerEvents(listener,this);
         }
-        BroadcastJoinMessage = config.getBoolean("BroadcastJoinMessage");
-      
-        getCommand("switch").setExecutor(new SwitchVar(this, listener));
-        getCommand("switch").setTabCompleter(new SwitchVarTabComplete());
 
 
         getServer().getPluginManager().registerEvents(new JoinListener(Bukkit.getWorlds().get(0).getName()), this);
         getLogger().info("Plugin started!");
     }
 
-     private void loadConfiguration() {
+     private void loadConfiguration(String locale) {
         config.addDefault("ShowKillCords", true);
         config.addDefault("Charset", "UTF8");
-        config.addDefault("BroadcastJoinMessage", true);
         config.addDefault("BackupOnShutDown", true);
         config.addDefault("BackupDirectory", "worldBackups");
+        config.addDefault("Language", locale);
         config.options().copyDefaults(true);
         this.saveConfig();
     }
@@ -64,9 +72,9 @@ public class Main extends JavaPlugin {
         try {
             charsetName = Charset.forName(config.getString("Charset"));
         } catch (IllegalArgumentException e) {
-            getLogger().info(ChatColor.RED + "Invalid Charset name! Change it in the config file!");
+            getLogger().info(ChatColor.RED + localeRes.getString("invalid_charset_message"));
             config.set("Charset", "UTF8");
-            getLogger().info("Using default charset - UTF-8");
+            getLogger().info(localeRes.getString("using_def_charset_message"));
             return "UTF8";
         }
         return charsetName.toString();
@@ -85,9 +93,9 @@ public class Main extends JavaPlugin {
                 zipper.addDirectory(new File(worldName + "_nether"));
                 zipper.addDirectory(new File(worldName + "_the_end"));
                 zipper.close();
-                getLogger().info(ChatColor.GREEN + "Backup of the world was created successfully.");
+                getLogger().info(ChatColor.GREEN + localeRes.getString("success_backup_message"));
             } catch (IOException e) {
-                getLogger().info(ChatColor.RED + "Failed to create a backup of the world!");
+                getLogger().info(ChatColor.RED + localeRes.getString("error_backup_message"));
                 e.printStackTrace();
             }
         }
