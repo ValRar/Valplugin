@@ -17,8 +17,6 @@ public class Main extends JavaPlugin {
     static ResourceBundle localeRes;
     @Override
     public void onEnable() {
-        charset = getCharset();
-
         File notesDir = new File(Bukkit.getWorlds().get(0).getName() + "/notes");
         if (!notesDir.exists()) {
             notesDir.mkdir();
@@ -44,6 +42,7 @@ public class Main extends JavaPlugin {
             localeRes = ResourceBundle.getBundle("locale", Locale.ENGLISH);
             loadConfiguration("en");
         }
+        charset = getCharset();
 
         getCommand("cords").setExecutor(new Cords());
         getCommand("warning").setExecutor(new Warning());
