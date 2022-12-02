@@ -86,12 +86,13 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         if (config.getBoolean("BackupOnShutDown")) {
+            File backupDir = new File("./" + config.getString("BackupDirectory", "worldBackups") + "/");
             String worldName = Bukkit.getWorlds().get(0).getName();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'_'HH-mm");
             Date date = new Date(System.currentTimeMillis());
             String zipName = worldName + "_" + formatter.format(date) + ".zip";
             try {
-                Zipper zipper = new Zipper("./worldBackups/" + zipName, getLogger());
+                Zipper zipper = new Zipper("./" + backupDir.getName() + "/" + zipName, getLogger());
                 zipper.addDirectory(new File(worldName));
                 zipper.addDirectory(new File(worldName + "_nether"));
                 zipper.addDirectory(new File(worldName + "_the_end"));
